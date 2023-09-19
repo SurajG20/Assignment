@@ -31,6 +31,7 @@ const TaskSchema = new mongoose.Schema({
       "family",
       "health",
       "hobbies",
+      "test",
     ],
     default: "personal",
   },

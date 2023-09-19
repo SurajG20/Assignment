@@ -7,6 +7,9 @@ const { StatusCodes } = require("http-status-codes");
 const createTask = async (req, res) => {
   try {
     const { title, desc, dueDate, category } = req.body;
+    if (title === "" || desc === "") {
+      throw new BadRequestError("Please Provide title and desc");
+    }
     const parsedDueDate = dueDate ? calculateDueDate(dueDate) : null;
     const task = await Task.create({
       title,
@@ -97,6 +100,7 @@ const getSingleTask = async (req, res) => {
     if (!task) {
       throw new NotFoundError(`No Task with id ${id}`);
     }
+    // if task is not completed, mark it completed
     if (!task.status) {
       task.status = !task.status;
     }
